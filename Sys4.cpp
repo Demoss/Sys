@@ -518,12 +518,14 @@ int main()
 			DeliverySystem delSys;
 			TrackingSystem trackSys;
 			PostOfficeOperator Oper2;
+			PaymentSystem paySys;
 			if (price > sender.getMoney()) {
 				sender.Reject(price);
 				del = DeliveryState::rejected;
 				PS = PaymentState::cancelled;
 				payResult.PayState = PS;
 				Oper.isPayed(payResult);
+				paySys.setStorage(payResult);
 			}
 			else {
 				cout << "OK" << endl;
@@ -534,6 +536,7 @@ int main()
 				payResult.PayState = PaymentState::payed;
 				payResult.AmoutOfTransaction = price;
 				Oper.isPayed(payResult);
+				paySys.setStorage(payResult);
 				DeliveryRequest DR(from, chosen, sendname, reciename, veh, price, del, false, PT);
 				payResult.id = DR.getid();
 				cout << "\"Post Office Operator say\"" << endl;
